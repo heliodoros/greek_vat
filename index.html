@@ -1,0 +1,55 @@
+<style>
+body {
+    font-family: 'Anybody';font-size: 22px;
+}
+</style>
+<button onclick="generate()">Regenerate</button> 
+<h3>
+ΑΦΜ
+</h3>
+<ul id="list"></ul>
+<script>
+function generateAFM(valid = true) {
+  let body = '';
+  let sum = 0;
+
+  for(let i = 8; i >= 1; i--) {
+    const digit = getRandomInt(0, 9);
+    body += digit.toString();
+    sum += digit << i;
+  }
+
+  const validator = sum % 11;
+  const d9Valid = validator % 10;
+  const d9 = valid ? d9Valid : getRandomInt(0, 9, d9Valid);
+
+  return `${body}${d9}`;
+}
+
+function getRandomInt(min, max, notEqual = null) {
+  let result;
+
+  min = Math.ceil(min);
+  max = Math.floor(max);
+
+  do {
+    result = Math.floor(Math.random() * (max - min + 1)) + min;
+  } while(notEqual !== null && result === notEqual);
+
+  return  result;
+}
+function generate(){
+var ul = document.getElementById("list");
+ ul.innerHTML = '';
+let i=0;
+while (i<100)
+{
+i++;
+var li = document.createElement("li");
+  li.appendChild(document.createTextNode(generateAFM()));
+  ul.appendChild(li);
+}
+
+}
+generate();
+</script>
